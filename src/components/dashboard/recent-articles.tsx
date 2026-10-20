@@ -11,22 +11,22 @@ import {
   TableRow,
 } from "../ui/table";
 import Link from "next/link";
-import type { Prisma } from "@prisma/client";
 import { deleteArticle } from "@/actions/delete-article";
- 
+
+type RecentArticle = {
+  id: string;
+  title: string;
+  createdAt: Date | string;
+  comments: { id: string }[];
+  author: {
+    name: string | null;
+    email: string | null;
+    imageUrl: string | null;
+  };
+};
+
 type RecentArticlesProps = {
-  articles: Prisma.ArticlesGetPayload<{
-    include: {
-      comments: true;
-      author: {
-        select: {
-          name: true;
-          email: true;
-          imageUrl: true;
-        };
-      };
-    };
-  }>[];
+  articles: RecentArticle[];
 };
 
 const RecentArticles: React.FC<RecentArticlesProps> = ({ articles }) => {

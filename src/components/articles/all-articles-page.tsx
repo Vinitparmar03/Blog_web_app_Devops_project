@@ -2,20 +2,22 @@ import { Card } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"; 
 import { Search } from "lucide-react";
 import Image from "next/image";
-import { Prisma } from "@prisma/client";
+
+type ArticleWithAuthor = {
+  id: string;
+  title: string;
+  category: string | null;
+  createdAt: Date;
+  featuredImage: string | null;
+  author: {
+    name: string | null;
+    email: string | null;
+    imageUrl: string | null;
+  };
+};
 
 type SearchPageProps = {
-  articles: Prisma.ArticlesGetPayload<{
-    include:{
-      author:{
-        select:{
-          name:true,
-          email:true,
-          imageUrl:true
-        }
-      }
-    }
-  }>[];
+  articles: ArticleWithAuthor[];
 };
 
 export function AllArticlesPage({ articles }: SearchPageProps) {

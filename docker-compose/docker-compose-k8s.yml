@@ -1,0 +1,9 @@
+services:
+  blog-webapplication:
+    image: vinitparmar03/blog-webapplication:02
+
+    build:
+      context: ../
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: ${NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}

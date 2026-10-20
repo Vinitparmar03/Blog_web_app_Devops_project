@@ -22,9 +22,11 @@ export async function TopArticles() {
     },
   });
 
+  const topArticles = articles.slice(0, 3) as typeof articles;
+
   return (
     <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-      {articles.slice(0, 3).map((article) => (
+      {topArticles.map((article: (typeof articles)[number]) => (
         <Card
           key={article.id}
           className={cn(

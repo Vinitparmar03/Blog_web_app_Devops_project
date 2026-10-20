@@ -1,6 +1,7 @@
 "use server"
 
 import { prisma } from "@/lib/prisma";
+import { articlesDeleted } from "@/lib/metrics";
 import { revalidatePath } from "next/cache";
  
 export const deleteArticle = async (articleId: string) => {
@@ -10,5 +11,6 @@ export const deleteArticle = async (articleId: string) => {
             id: articleId,
         },
     });
+    articlesDeleted.inc();
     revalidatePath("/dashboard");
 }

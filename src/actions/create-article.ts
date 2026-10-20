@@ -1,5 +1,6 @@
 "use server";
 import { prisma } from "@/lib/prisma";
+import { articlesCreated } from "@/lib/metrics";
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { z } from "zod";
@@ -118,9 +119,15 @@ export const createArticles = async (
         category: result.data.category,
         content: result.data.content,
         featuredImage: imageUrl,
-        authorId: existingUser.id, // ✅ Correct Foreign Key Usage
+        authorId: existingUser.id,
       },
     });
+
+    articlesCreated.inc();
+
+
+
+
   } catch (error: unknown) {
     if (error instanceof Error) {
       return {
